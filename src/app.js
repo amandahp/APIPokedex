@@ -1,11 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const cors = require("cors");
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+
+var corsOptions = {
+  origin: '*',
+  methods: 'GET', 
+};
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions)) // include before other routes
 // Database
 mongoose.connect(process.env.DATABASE_CONNECTION_STRING, {
     useUnifiedTopology: true,
